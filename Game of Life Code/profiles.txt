@@ -1,6 +1,22 @@
-Initial program performance (runtime, bottlenecks, scaling with n):
+Initial program performance (runtime, bottlenecks, scaling with n): Running cPython, I found that there were 7111259 function calls (7106057 primitive calls) in 2.946 seconds. The worst offenders were:
+For life.py:
+Line 1 (importing the module)
+Line 4 (life)
+Line 13 (update)
+Line 41 (get n_alive_neighbors)
+Line 54 (is_neighbor)
 
-Fix 1:
-New program performance:
+For run_life.py:
+Line 4
 
-etc.
+Fix 1: In line 8, replace board = [[np.random.randint(0, 2) for i in range(n)] for j in range(n)] with board=np.random.randint(2, size=(n, n)). 
+New program performance: This resulted in 7110500 function calls (7105298 primitive calls) in 4.035 seconds. So maybe this wasn't as helpful as I hoped.
+
+Fix 2: Commented out np.random.seed(1).
+New program performance: 7110489 function calls (7105287 primitive calls) in 3.475 seconds.
+
+Fix 3: Reversed previous changes, replaced "next_board = [[0 for i in range(n)] for j in range(n)]" with "next_board = np.zeros((n,n), dtype=np.int)".
+New program performance: 7110921 function calls (7105719 primitive calls) in 2.917 seconds.
+
+Fix 4: To copy next board onto current board, replaced with "board = next_board". 
+New program performance: 7110910 function calls (7105708 primitive calls) in 2.926 seconds

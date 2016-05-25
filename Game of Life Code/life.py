@@ -5,7 +5,7 @@ def life(n=20, plot=False):
     """Set up the board and start the simulation"""
     # Fill the board randomly (but with a known seed for repeatability)
     np.random.seed(1)
-    board = [[np.random.randint(0, 2) for i in range(n)] for j in range(n)]
+    board = [[np.random.randint(0, 2) for i in range(n)] for j in range(n)] #board = np.random.randint(2, size=(n, n)) 
 
     ####### DON'T CHANGE THIS LINE #######
     run_life(board, update, n, plot=plot)
@@ -13,7 +13,7 @@ def life(n=20, plot=False):
 def update(board, n):
     """Calculate the next board from the current board"""
     # Create the board at t+1 and zero-fill it
-    next_board = [[0 for i in range(n)] for j in range(n)]
+    next_board = np.zeros((n,n), dtype=np.int) #next_board = [[0 for i in range(n)] for j in range(n)]
 
     # Figure out what to do to each cell
     for i in range(n):
@@ -34,9 +34,10 @@ def update(board, n):
                     next_board[i][j] = 0
 
     # Copy the next board into the current board
-    for i in range(n):
-        for j in range(n):
-            board[i][j] = next_board[i][j]
+    board = next_board
+    #for i in range(n):
+        #for j in range(n):
+            #board[i][j] = next_board[i][j]
 
 def get_n_alive_neighbors(board, n, i, j):
     """Return the number of neighbors of (i, j) that are alive"""
